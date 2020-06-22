@@ -1,0 +1,17 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+      "module": "CommonJS",
+      "target": "ES6",
+      "types": ["node"],
+      "noImplicitAny": true,
+      "sourceMap": false,
+      "outDir": "src",
+      "baseUrl": ".",
+      "paths": {
+        "*": ["node_modules/*"]
+      }
+    },
+    "include": ["dev/**/*"]
+  }
+  
