@@ -52,9 +52,25 @@ router.post("/", (req, res, next) => {
         return res.status(406).json({ error: "Validation error" });
     });
 });
-router.post("/login", (req, res, next) => {
-    // login user
-});
+router.post("/login", (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email, password } = req.body;
+    let user = yield user_model_1.User.findOne({
+        where: { email },
+    });
+    if (!user) {
+        return res.status(406).json({ error: "Invalid Credentials" });
+    }
+    if (yield bcrypt.compareSync(password, user.password)) {
+        let token = yield jwt.sign({
+            email: user.email,
+            id: user.id,
+        }, process.env.JWT_SECRET, {
+            expiresIn: "30d",
+        });
+        return res.json(Object.assign({ token }, user.toJSON()));
+    }
+    return res.status(406).json({ error: "Invalid Credentials" });
+}));
 router.get("/history", (req, res, next) => {
     // get user history
 });

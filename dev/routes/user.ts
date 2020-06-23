@@ -47,8 +47,31 @@ router.post("/", (req, res, next) => {
     });
 });
 
-router.post("/login", (req, res, next) => {
-  // login user
+router.post("/login", async (req, res, next) => {
+  const { email, password } = req.body;
+  let user: User = await User.findOne({
+    where: { email },
+  });
+  if (!user) {
+    return res.status(406).json({ error: "Invalid Credentials" });
+  }
+  if (await bcrypt.compareSync(password, user.password)) {
+    let token = await jwt.sign(
+      {
+        email: user.email,
+        id: user.id,
+      },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "30d",
+      }
+    );
+    return res.json({
+      token,
+      ...user.toJSON(),
+    });
+  }
+  return res.status(406).json({ error: "Invalid Credentials" });
 });
 
 router.get("/history", (req, res, next) => {
