@@ -6,9 +6,11 @@ const user_model_1 = require("./models/user_model");
 dotenv.config();
 // auto-call function to init database
 const { DB_NAME, DB_USER, DB_PASSWORD } = process.env;
-exports.sequilize = new sequelize_1.Sequelize(DB_NAME || "medical", DB_USER || "root", DB_PASSWORD || "", {
+exports.sequilize = new sequelize_1.Sequelize("sql12350301", "sql12350301", "pEaCakd7In", {
+    host: "sql12.freemysqlhosting.net",
+    port: 3306,
     dialect: "mysql",
-    logging: false,
+    logging: console.log,
 });
 user_model_1.User.init({
     id: {

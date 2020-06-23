@@ -5,13 +5,15 @@ dotenv.config();
 // auto-call function to init database
 const { DB_NAME, DB_USER, DB_PASSWORD } = process.env;
 export const sequilize = new Sequelize(
-  DB_NAME || "medical",
-  DB_USER || "root",
-  DB_PASSWORD || "",
+  "sql12350301",
+  "sql12350301",
+  "pEaCakd7In",
   {
+    host: "sql12.freemysqlhosting.net",
+    port: 3306,
     dialect: "mysql",
-    logging: false,
-  }
+    logging: console.log,
+  },
 );
 
 User.init(
@@ -37,7 +39,7 @@ User.init(
       type: DataTypes.STRING,
     },
   },
-  { sequelize: sequilize }
+  { sequelize: sequilize },
 );
 (function () {
   // auto call functions
